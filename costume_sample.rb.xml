@@ -1,0 +1,233 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <character x="0" y="126" name="cat1" costumes="costume1:cat1.png" angle="0"></character>
+  <character x="0" y="0" name="shot" costumes="costume1:ball6.png" angle="0"></character>
+  <character x="562" y="140" name="item" costumes="costume1:ball1.png,costume2:ball2.png,costume3:ball3.png,costume4:ball4.png" costume_index="3" angle="0"></character>
+  <block type="variables_set" id="1307" inline="true" x="75" y="-69">
+    <field name="VAR">速度</field>
+    <value name="VALUE">
+      <block type="math_number" id="1308">
+        <field name="NUM">-10</field>
+      </block>
+    </value>
+    <next>
+      <block type="variables_set" id="1309" inline="true">
+        <field name="VAR">加速度</field>
+        <value name="VALUE">
+          <block type="math_number" id="1310">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+    </next>
+  </block>
+  <block type="character_new" id="1311" x="67" y="34">
+    <field name="NAME">cat1</field>
+    <statement name="DO">
+      <block type="events_on_key_push_or_down" id="1312">
+        <field name="KEY">K_DOWN</field>
+        <field name="POD">down</field>
+        <statement name="DO">
+          <block type="motion_change_y_by" id="1313" inline="true">
+            <value name="Y">
+              <block type="math_number" id="1314">
+                <field name="NUM">20</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="events_on_key_push_or_down" id="1315">
+            <field name="KEY">K_UP</field>
+            <field name="POD">down</field>
+            <statement name="DO">
+              <block type="motion_change_y_by" id="1316" inline="true">
+                <value name="Y">
+                  <block type="math_number" id="1317">
+                    <field name="NUM">-20</field>
+                  </block>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="character_new" id="1318" x="633" y="19">
+    <field name="NAME">shot</field>
+    <statement name="DO">
+      <block type="events_on_start" id="1319">
+        <statement name="DO">
+          <block type="looks_hide" id="1320"></block>
+        </statement>
+        <next>
+          <block type="events_on_key_push_or_down" id="1321">
+            <field name="KEY">K_SPACE</field>
+            <field name="POD">down</field>
+            <statement name="DO">
+              <block type="motion_go_to_character" id="1322">
+                <field name="CHAR">cat1</field>
+                <next>
+                  <block type="looks_show" id="1323">
+                    <next>
+                      <block type="control_loop" id="1324">
+                        <statement name="DO">
+                          <block type="motion_move" id="1325" inline="true">
+                            <value name="STEP">
+                              <block type="math_number" id="1326">
+                                <field name="NUM">20</field>
+                              </block>
+                            </value>
+                            <next>
+                              <block type="control_if" id="1327" inline="true">
+                                <value name="COND">
+                                  <block type="sensing_reach_wall" id="1328"></block>
+                                </value>
+                                <statement name="THEN">
+                                  <block type="control_break" id="1329"></block>
+                                </statement>
+                                <next>
+                                  <block type="control_if" id="1330" inline="true">
+                                    <value name="COND">
+                                      <block type="sensing_hit" id="1331">
+                                        <field name="CHAR">item</field>
+                                      </block>
+                                    </value>
+                                    <statement name="THEN">
+                                      <block type="character_new" id="1332">
+                                        <field name="NAME">item</field>
+                                        <statement name="DO">
+                                          <block type="looks_next_costume" id="1333"></block>
+                                        </statement>
+                                        <next>
+                                          <block type="variables_set" id="1334" inline="true">
+                                            <field name="VAR">速度</field>
+                                            <value name="VALUE">
+                                              <block type="math_number" id="1335">
+                                                <field name="NUM">5</field>
+                                              </block>
+                                            </value>
+                                            <next>
+                                              <block type="variables_set" id="1336" inline="true">
+                                                <field name="VAR">加速度</field>
+                                                <value name="VALUE">
+                                                  <block type="math_number" id="1337">
+                                                    <field name="NUM">5</field>
+                                                  </block>
+                                                </value>
+                                                <next>
+                                                  <block type="control_break" id="1338"></block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </statement>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </statement>
+                        <next>
+                          <block type="looks_hide" id="1339"></block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="character_new" id="1340" x="77" y="271">
+    <field name="NAME">item</field>
+    <statement name="DO">
+      <block type="events_on_start" id="1341">
+        <statement name="DO">
+          <block type="control_loop" id="1342">
+            <statement name="DO">
+              <block type="control_if_else" id="1343" inline="true">
+                <value name="COND">
+                  <block type="operators_compare_gt" id="1344" inline="true">
+                    <value name="A">
+                      <block type="variables_get" id="1345">
+                        <field name="VAR">速度</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="math_number" id="1346">
+                        <field name="NUM">-10</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <statement name="THEN">
+                  <block type="variables_set" id="1347" inline="true">
+                    <field name="VAR">速度</field>
+                    <value name="VALUE">
+                      <block type="operators_add" id="1348" inline="true">
+                        <value name="A">
+                          <block type="variables_get" id="1349">
+                            <field name="VAR">速度</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get" id="1350">
+                            <field name="VAR">加速度</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="variables_set" id="1351" inline="true">
+                        <field name="VAR">加速度</field>
+                        <value name="VALUE">
+                          <block type="operators_minus" id="1352" inline="true">
+                            <value name="A">
+                              <block type="variables_get" id="1353">
+                                <field name="VAR">加速度</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_number" id="1354">
+                                <field name="NUM">1</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </statement>
+                <statement name="ELSE">
+                  <block type="variables_set" id="1355" inline="true">
+                    <field name="VAR">速度</field>
+                    <value name="VALUE">
+                      <block type="math_number" id="1356">
+                        <field name="NUM">-10</field>
+                      </block>
+                    </value>
+                  </block>
+                </statement>
+                <next>
+                  <block type="motion_change_x_by" id="1357" inline="true">
+                    <value name="X">
+                      <block type="variables_get" id="1358">
+                        <field name="VAR">速度</field>
+                      </block>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </statement>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
